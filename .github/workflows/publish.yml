@@ -13,6 +13,7 @@ on:
 
 permissions:
   contents: read
+  packages: write
 
 jobs:
   docker:
@@ -38,8 +39,15 @@ jobs:
 
       - uses: docker/login-action@v3
         with:
+          registry: docker.io
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
 
       - uses: docker/build-push-action@v6
         with:
@@ -50,3 +58,5 @@ jobs:
           tags: |
             ${{ secrets.DOCKERHUB_USERNAME }}/zdsr-remote:${{ steps.version.outputs.version }}
             ${{ secrets.DOCKERHUB_USERNAME }}/zdsr-remote:latest
+            ghcr.io/${{ github.repository_owner }}/zdsr-remote:${{ steps.version.outputs.version }}
+            ghcr.io/${{ github.repository_owner }}/zdsr-remote:latest

@@ -186,11 +186,13 @@ The official ZDRemoteServer binary and `SQLite.Interop.dll` are included only to
 
 - Production deployments should use an explicit version tag, such as `star-notes/zdsr-remote:2.2.0.0`. Do not use `latest` in production.
 - `latest` always points to the newest successful release and is provided only for testing or users who explicitly accept automatic upgrades.
+- Images are published to Docker Hub (`star-notes/zdsr-remote`) and GitHub Container Registry (`ghcr.io/dpy013/zdsr-remote`) with matching tags.
 - Create a Git tag in the form `v2.2.1.0` to publish Docker tags `2.2.1.0` and `latest` automatically. A manual workflow run accepts the same version number without the `v` prefix.
 
 - 生产环境应使用明确版本标签，例如 `star-notes/zdsr-remote:2.2.0.0`；不要在生产环境使用 `latest`。
 - `latest` 始终指向最新成功发布的版本，只适合测试或明确接受自动升级的用户。
+- 镜像会同时发布到 Docker Hub（`star-notes/zdsr-remote`）和 GitHub Container Registry（`ghcr.io/dpy013/zdsr-remote`），标签保持一致。
 - 创建形如 `v2.2.1.0` 的 Git tag 后，工作流会自动发布 `2.2.1.0` 与 `latest` 两个 Docker 标签；手动运行工作流时填写不带 `v` 的同一版本号。
 
-- Image version `2.2.0.1` is a container packaging revision that includes runtime-loading fixes; the bundled official server program remains `2.2.0.0`.
-- 镜像版本 `2.2.0.1` 是包含运行时加载修复的容器封装修订版；内置的官方服务端程序仍为 `2.2.0.0`。
+- Image version `2.2.0.2` is a container packaging revision that includes runtime-loading fixes; the bundled official server program remains `2.2.0.0`.
+- 镜像版本 `2.2.0.2` 是包含运行时加载修复及双镜像仓库发布的容器封装修订版；内置的官方服务端程序仍为 `2.2.0.0`。
