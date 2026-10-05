@@ -5,9 +5,11 @@ LABEL org.opencontainers.image.title="ZDSR Remote Server" \
       org.opencontainers.image.source="https://github.com/dpy013/zdsr-remote-image" \
       org.opencontainers.image.version="2.2.0.0"
 
+ENV LD_LIBRARY_PATH=/app
+
 WORKDIR /data
-COPY ZDRemoteServer SQLite.Interop.dll /app/
-RUN useradd --uid 1000 --gid 100 --no-create-home --shell /usr/sbin/nologin remote
+COPY --chown=1000:100 ZDRemoteServer SQLite.Interop.dll /app/
+RUN chmod 0755 /app/ZDRemoteServer && chmod 0644 /app/SQLite.Interop.dll && ln -s /app/SQLite.Interop.dll /app/libSQLite.Interop.dll.so && ln -s /app/SQLite.Interop.dll /app/SQLite.Interop.dll.so && useradd --uid 1000 --gid 100 --no-create-home --shell /usr/sbin/nologin remote
 
 USER 1000:100
 EXPOSE 23188/tcp 23188/udp
