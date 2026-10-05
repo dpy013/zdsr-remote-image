@@ -2,3 +2,4 @@
 .github/workflows/*.yml text eol=lf
 Dockerfile text eol=lf
 README.md text eol=lf
+README.en.md text eol=lf
