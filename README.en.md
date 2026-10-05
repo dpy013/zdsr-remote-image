@@ -2,6 +2,8 @@
 
 [中文](README.md) | [English](README.en.md)
 
+**Repository links:** [GitHub source repository](https://github.com/dpy013/zdsr-remote-image) · [Docker Hub image repository](https://hub.docker.com/r/star-notes/zdsr-remote) · [GitHub Container Registry](https://github.com/dpy013/zdsr-remote-image/pkgs/container/zdsr-remote)
+
 > This image is built from the official **ZDRemoteServer 2.2.0.0 Linux x64** server distribution.
 
 ## Purpose

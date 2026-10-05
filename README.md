@@ -2,6 +2,8 @@
 
 [中文](README.md) | [English](README.en.md)
 
+**仓库链接：** [GitHub 源码仓库](https://github.com/dpy013/zdsr-remote-image) · [Docker Hub 镜像仓库](https://hub.docker.com/r/star-notes/zdsr-remote) · [GitHub Container Registry](https://github.com/dpy013/zdsr-remote-image/pkgs/container/zdsr-remote)
+
 > 本镜像基于争渡官方提供的 **ZDRemoteServer 2.2.0.0 Linux x64** 服务端构建。
 
 ## 用途
