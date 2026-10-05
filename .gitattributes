@@ -1,0 +1,4 @@
+# Keep GitHub Actions files compatible with Linux runners when edited on Windows.
+.github/workflows/*.yml text eol=lf
+Dockerfile text eol=lf
+README.md text eol=lf
