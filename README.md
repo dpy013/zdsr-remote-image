@@ -32,6 +32,7 @@ cat > zdsr-data/config.json <<'EOF'
   "LogLevel": "INFO"
 }
 EOF
+sudo chown -R 1000:100 zdsr-data
 ```
 
 使用 Docker Hub 的固定版本启动：
@@ -43,13 +44,13 @@ docker run -d \
   -p 23188:23188/tcp \
   -p 23188:23188/udp \
   -v "$(pwd)/zdsr-data:/data" \
-  star-notes/zdsr-remote:2.2.0.2
+  star-notes/zdsr-remote:2.2.0.3 /data
 ```
 
 如 Docker Hub 网络访问不稳定，也可使用 GHCR：
 
 ```bash
-ghcr.io/dpy013/zdsr-remote:2.2.0.2
+ghcr.io/dpy013/zdsr-remote:2.2.0.3 /data
 ```
 
 ## Docker Compose 示例
@@ -57,14 +58,16 @@ ghcr.io/dpy013/zdsr-remote:2.2.0.2
 ```yaml
 services:
   zdsr-remote:
-    image: star-notes/zdsr-remote:2.2.0.2
+    image: star-notes/zdsr-remote:2.2.0.3
     container_name: zdsr-remote
     restart: unless-stopped
     ports:
       - "23188:23188/tcp"
       - "23188:23188/udp"
+    user: "1000:100"
     volumes:
       - ./zdsr-data:/data
+    command: ["/data"]
 ```
 
 运行：
@@ -73,6 +76,7 @@ services:
 docker compose up -d
 ```
 
+> `/data` 以 bind mount 挂载时，宿主机目录必须允许容器用户 `1000:100` 写入；如果目录已存在，请先执行 `sudo chown -R 1000:100 zdsr-data`。
 ## `config.json` 说明
 
 | 配置项 | 说明 |
@@ -85,7 +89,7 @@ docker compose up -d
 
 ## 镜像标签策略
 
-- 生产环境请使用明确版本标签，例如 `2.2.0.2`；不要使用 `latest`。
+- 生产环境请使用明确版本标签，例如 `2.2.0.3`；不要使用 `latest`。
 - `latest` 指向最新成功发布的版本，只适合测试或明确接受自动升级的用户。
 - 镜像会同时发布到 Docker Hub 和 GitHub Container Registry，标签保持一致：
 
@@ -95,7 +99,7 @@ docker compose up -d
   ```
 
 - 创建形如 `v2.2.1.0` 的 Git tag 后，工作流会自动发布相应版本和 `latest`；手动运行工作流时填写不带 `v` 的版本号。
-- `2.2.0.2` 是包含运行时加载修复及双镜像仓库发布的容器封装修订版；内置的官方服务端程序仍为 `2.2.0.0`。
+- `2.2.0.3` 是包含 Ubuntu 22.04 基础镜像、运行时加载修复及双镜像仓库发布的容器封装修订版；内置的官方服务端程序仍为 `2.2.0.0`。
 
 ## 源码与再分发
 
