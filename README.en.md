@@ -44,13 +44,13 @@ docker run -d \
   -p 23188:23188/tcp \
   -p 23188:23188/udp \
   -v "$(pwd)/zdsr-data:/data" \
-  star-notes/zdsr-remote:2.2.0.3 /data
+  star-notes/zdsr-remote:2.2.0.4
 ```
 
 If Docker Hub connectivity is unreliable, use the matching GHCR image instead:
 
 ```bash
-ghcr.io/dpy013/zdsr-remote:2.2.0.3 /data
+ghcr.io/dpy013/zdsr-remote:2.2.0.4
 ```
 
 ## Docker Compose example
@@ -58,7 +58,7 @@ ghcr.io/dpy013/zdsr-remote:2.2.0.3 /data
 ```yaml
 services:
   zdsr-remote:
-    image: star-notes/zdsr-remote:2.2.0.3
+    image: star-notes/zdsr-remote:2.2.0.4
     container_name: zdsr-remote
     restart: unless-stopped
     ports:
@@ -67,7 +67,6 @@ services:
     user: "1000:100"
     volumes:
       - ./zdsr-data:/data
-    command: ["/data"]
 ```
 
 Start it with:
@@ -77,6 +76,8 @@ docker compose up -d
 ```
 
 > When `/data` is a bind mount, the host directory must be writable by container user `1000:100`; for an existing directory, run `sudo chown -R 1000:100 zdsr-data` first.
+
+> The image defaults to `/data` as its data directory, so `/data` no longer needs to be passed after the image name.
 ## `config.json` reference
 
 | Field | Description |
@@ -89,7 +90,7 @@ docker compose up -d
 
 ## Image tag policy
 
-- Use an explicit version tag such as `2.2.0.3` in production; do not use `latest`.
+- Use an explicit version tag such as `2.2.0.4` in production; do not use `latest`.
 - `latest` points to the newest successful release and is only for testing or users who explicitly accept automatic upgrades.
 - Images are published to Docker Hub and GitHub Container Registry with matching tags:
 
@@ -99,7 +100,7 @@ docker compose up -d
   ```
 
 - Create a Git tag such as `v2.2.1.0` to publish the corresponding version and `latest` automatically. A manual workflow run accepts the version without its `v` prefix.
-- `2.2.0.3` is a container packaging revision that includes Ubuntu 22.04 base image, runtime-loading fixes, and dual-registry publishing. The bundled official server program remains `2.2.0.0`.
+- `2.2.0.4` fixes the default startup argument, so running the image directly now uses `/data` as its data directory. The bundled official server program remains `2.2.0.0`.
 
 ## Source and redistribution
 

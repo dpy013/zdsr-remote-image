@@ -44,13 +44,13 @@ docker run -d \
   -p 23188:23188/tcp \
   -p 23188:23188/udp \
   -v "$(pwd)/zdsr-data:/data" \
-  star-notes/zdsr-remote:2.2.0.3 /data
+  star-notes/zdsr-remote:2.2.0.4
 ```
 
 如 Docker Hub 网络访问不稳定，也可使用 GHCR：
 
 ```bash
-ghcr.io/dpy013/zdsr-remote:2.2.0.3 /data
+ghcr.io/dpy013/zdsr-remote:2.2.0.4
 ```
 
 ## Docker Compose 示例
@@ -58,7 +58,7 @@ ghcr.io/dpy013/zdsr-remote:2.2.0.3 /data
 ```yaml
 services:
   zdsr-remote:
-    image: star-notes/zdsr-remote:2.2.0.3
+    image: star-notes/zdsr-remote:2.2.0.4
     container_name: zdsr-remote
     restart: unless-stopped
     ports:
@@ -67,7 +67,6 @@ services:
     user: "1000:100"
     volumes:
       - ./zdsr-data:/data
-    command: ["/data"]
 ```
 
 运行：
@@ -77,6 +76,8 @@ docker compose up -d
 ```
 
 > `/data` 以 bind mount 挂载时，宿主机目录必须允许容器用户 `1000:100` 写入；如果目录已存在，请先执行 `sudo chown -R 1000:100 zdsr-data`。
+
+> 镜像的默认数据目录为 `/data`，因此不再需要在镜像名后额外传入 `/data`。
 ## `config.json` 说明
 
 | 配置项 | 说明 |
@@ -89,7 +90,7 @@ docker compose up -d
 
 ## 镜像标签策略
 
-- 生产环境请使用明确版本标签，例如 `2.2.0.3`；不要使用 `latest`。
+- 生产环境请使用明确版本标签，例如 `2.2.0.4`；不要使用 `latest`。
 - `latest` 指向最新成功发布的版本，只适合测试或明确接受自动升级的用户。
 - 镜像会同时发布到 Docker Hub 和 GitHub Container Registry，标签保持一致：
 
@@ -99,7 +100,7 @@ docker compose up -d
   ```
 
 - 创建形如 `v2.2.1.0` 的 Git tag 后，工作流会自动发布相应版本和 `latest`；手动运行工作流时填写不带 `v` 的版本号。
-- `2.2.0.3` 是包含 Ubuntu 22.04 基础镜像、运行时加载修复及双镜像仓库发布的容器封装修订版；内置的官方服务端程序仍为 `2.2.0.0`。
+- `2.2.0.4` 修复了默认启动参数，因此直接运行镜像也会以 `/data` 作为数据目录；内置的官方服务端程序仍为 `2.2.0.0`。
 
 ## 源码与再分发
 

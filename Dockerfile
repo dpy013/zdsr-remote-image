@@ -1,6 +1,6 @@
 FROM mcr.microsoft.com/dotnet/runtime-deps:6.0-jammy
 
-ARG IMAGE_VERSION=2.2.0.3
+ARG IMAGE_VERSION=2.2.0.4
 LABEL org.opencontainers.image.title="ZDSR Remote Server" \
       org.opencontainers.image.description="Container image for the official ZDRemoteServer Linux x64 binary" \
       org.opencontainers.image.source="https://github.com/dpy013/zdsr-remote-image" \
@@ -19,3 +19,4 @@ RUN chmod 0755 /app/ZDRemoteServer && \
 USER 1000:100
 EXPOSE 23188/tcp 23188/udp
 ENTRYPOINT ["/app/ZDRemoteServer"]
+CMD ["/data"]
